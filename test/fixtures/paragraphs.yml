@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  paragraph_index: 1
+  scotus_case_id: 1
+  justice_id: 1
+  text: MyText
+
+two:
+  paragraph_index: 1
+  scotus_case_id: 1
+  justice_id: 1
+  text: MyText

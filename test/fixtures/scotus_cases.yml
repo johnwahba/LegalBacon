@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  volume: 1
+  start_page: 1
+  m_opinion: MyText
+  c_opinions: MyText
+  d_opinions: MyText
+
+two:
+  volume: 1
+  start_page: 1
+  m_opinion: MyText
+  c_opinions: MyText
+  d_opinions: MyText
