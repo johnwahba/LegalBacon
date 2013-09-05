@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130903212507) do
+ActiveRecord::Schema.define(:version => 20130905202235) do
 
   create_table "citations", :force => true do |t|
     t.integer  "cited_case_id"
@@ -60,5 +60,7 @@ ActiveRecord::Schema.define(:version => 20130903212507) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "scotus_cases", ["volume", "start_page"], :name => "index_scotus_cases_on_volume_and_start_page"
 
 end
