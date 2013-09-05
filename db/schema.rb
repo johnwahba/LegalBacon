@@ -15,11 +15,9 @@ ActiveRecord::Schema.define(:version => 20130903212507) do
 
   create_table "citations", :force => true do |t|
     t.integer  "cited_case_id"
-    t.integer  "paragraph_id"
-    t.integer  "start_link_text"
-    t.integer  "end_link_text"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer  "citing_case_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "justices", :force => true do |t|
@@ -27,8 +25,9 @@ ActiveRecord::Schema.define(:version => 20130903212507) do
     t.date     "start_date"
     t.date     "end_date"
     t.string   "wiki_link"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "searchable_name"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "opinion_types", :force => true do |t|
@@ -40,14 +39,15 @@ ActiveRecord::Schema.define(:version => 20130903212507) do
   create_table "opinions", :force => true do |t|
     t.integer  "opinion_type_id"
     t.integer  "case_id"
+    t.integer  "justice_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
 
   create_table "paragraphs", :force => true do |t|
     t.integer  "paragraph_index_number"
-    t.integer  "opinion_id"
     t.text     "text"
+    t.integer  "opinion_id"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
   end

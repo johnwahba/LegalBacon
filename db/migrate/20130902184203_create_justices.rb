@@ -5,6 +5,7 @@ class CreateJustices < ActiveRecord::Migration
       t.date :start_date
       t.date :end_date
       t.string :wiki_link
+      t.string :searchable_name
 
       t.timestamps
     end

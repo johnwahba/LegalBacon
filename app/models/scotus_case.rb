@@ -5,5 +5,12 @@ class ScotusCase < ActiveRecord::Base
   has_many :paragraphs, :through => :opinions, :source => :paragraphs 
 
   accepts_nested_attributes_for :opinions
+
+  def case_name=(name)
+  	name = name[0..254]
+  	super(name)
+  end
+
+
   
 end
