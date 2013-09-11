@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130905202235) do
+ActiveRecord::Schema.define(:version => 20130911185405) do
 
   create_table "citations", :force => true do |t|
     t.integer  "cited_case_id"
@@ -19,6 +19,9 @@ ActiveRecord::Schema.define(:version => 20130905202235) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
+
+  add_index "citations", ["cited_case_id"], :name => "index_citations_on_cited_case_id"
+  add_index "citations", ["citing_case_id"], :name => "index_citations_on_citing_case_id"
 
   create_table "justices", :force => true do |t|
     t.string   "name"
@@ -29,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20130905202235) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
+
+  add_index "justices", ["searchable_name"], :name => "index_justices_on_searchable_name"
 
   create_table "opinion_types", :force => true do |t|
     t.string   "opinion_type"
@@ -44,13 +49,20 @@ ActiveRecord::Schema.define(:version => 20130905202235) do
     t.datetime "updated_at",      :null => false
   end
 
+  add_index "opinions", ["case_id"], :name => "index_opinions_on_case_id"
+  add_index "opinions", ["justice_id"], :name => "index_opinions_on_justice_id"
+  add_index "opinions", ["opinion_type_id"], :name => "index_opinions_on_opinion_type_id"
+
   create_table "paragraphs", :force => true do |t|
     t.integer  "paragraph_index_number"
     t.text     "text"
     t.integer  "opinion_id"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.boolean  "start_of_opinion",       :default => false
   end
+
+  add_index "paragraphs", ["opinion_id"], :name => "index_paragraphs_on_opinion_id"
 
   create_table "scotus_cases", :force => true do |t|
     t.integer  "volume"

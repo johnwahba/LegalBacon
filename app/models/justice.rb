@@ -3,6 +3,8 @@ class Justice < ActiveRecord::Base
 
   has_many :opinions
 
+  has_many :cases, through: :opinions, source: :case
+
   def searchable_name=(name)
   	name = (name.downcase)
   	super(name)
@@ -10,6 +12,10 @@ class Justice < ActiveRecord::Base
 
 
   def self.find_by_searchable_name(name)
+    if name =~ /justice /i
+      name = name[8..-1]
+    end
+
   	super(name.downcase)
   end
 

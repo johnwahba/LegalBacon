@@ -1,5 +1,5 @@
 class Paragraph < ActiveRecord::Base
-  attr_accessible :paragraph_index_number, :text, :opinion_id
+  attr_accessible :paragraph_index_number, :text, :opinion_id, :start_of_opinion
 
  
   has_many :citations

@@ -3,7 +3,8 @@ require 'nokogiri'
 #Third the cases
 
 
-JUSTICE_NAME_REGEX = /Justice (?:Mc|VAN |O')?[A-Z]{2,100}/
+JUSTICE_NAME_REGEX = /J[Uu][Ss][Tt][Ii][Cc][Ee] (?:Mc|VAN |O')?[A-Z]{2,100}/
+NAME_REGEX = /(?:Mc|VAN |O')?[A-Z]{2,100}/
 JUSTICE_ACTION_REGEX = /(, dissent|, concur| announce|,? deliver|, with|, Circuit|\.$)[a-z]*/
 MEMORANDUM_REGEX =  /Memorandum.*#{JUSTICE_NAME_REGEX}/
 OPINION_DETECTION_REGEX =/#{JUSTICE_NAME_REGEX}#{JUSTICE_ACTION_REGEX}[\. ]|PER CURIAM|#{MEMORANDUM_REGEX}/
@@ -47,47 +48,55 @@ cases =  Dir[ARGV[0]+'/*/*']
 
 cases.each_with_index do |case_dir, jidx|
 	next if case_dir =~ /index/ || case_dir =~ /other/
-
 	if jidx % 200 == 0
 		p case_dir
 		p jidx.to_s + "/" + cases.length.to_s
 	end
 
+	case_page = Nokogiri::HTML(File.open(case_dir))
+	volume = case_page.css('.case_cite')[0].text.split[0]
+	start_page = case_page.css('.case_cite')[0].text.split[2]
+	date_heard = case_page.css('.date')[-1].text.scan(/(.*)/)[0][0] if !case_page.css('.date').empty?
+	case_name = case_page.css('.parties')[0].text
 
-	begin
-		case_page = Nokogiri::HTML(File.open(case_dir))
-		volume = case_page.css('.case_cite')[0].text.split[0]
-		start_page = case_page.css('.case_cite')[0].text.split[2]
-		date_heard = case_page.css('.date')[-1].text.scan(/(.*)/)[0][0] if !case_page.css('.date').empty?
-		case_name = case_page.css('.parties')[0].text
+	paragraph_text_array = case_page.css('p').map(&:text)
 
-		paragraph_text_array = case_page.css('p').map(&:text)
+	paragraphs_attributes = []
 
-		current_opinion_object = {opinion_type_id: nil, justice_id: nil, paragraphs_attributes: []}
+	current_opinion_object = {opinion_type_id: nil, justice_id: nil, paragraphs_attributes: paragraphs_attributes}
 
-		opinions_attributes = []
-		paragraphs_attributes = []
-		opinion_type_id = nil
-		justice_id = nil
-		paragraph_text_array.each_with_index do |paragraph_text, idx|
-
+	opinions_attributes = []
+	opinion_type_id = nil
+	justice_id = nil
+	paragraph_text_array.each_with_index do |paragraph_text, idx|
+		begin
 			if paragraph_text =~ OPINION_DETECTION_REGEX
-				#Save current Opinion
-				opinions_attributes << current_opinion_object
-				opinion_type_id = OpinionType.find_by_opinion_type(paragraph_text.scan(OPINION_TYPE_DETECTION_REGEX)[0]).id
-				begin
-					justice_id = Justice.find_by_searchable_name(paragraph_text.scan(JUSTICE_NAME_REGEX)[0][8..-1]).id unless paragraph_text.scan(JUSTICE_NAME_REGEX).empty?
-				rescue 
-					p "ERROR"
-					p case_dir
-					p paragraph_text.scan(JUSTICE_NAME_REGEX)[0][8..-1]
-					p Justice.find_by_searchable_name(paragraph_text.scan(JUSTICE_NAME_REGEX)[0][8..-1])
+
+				type_checker = OpinionType.find_by_opinion_type(paragraph_text.scan(OPINION_TYPE_DETECTION_REGEX)[0]).opinion_type
+
+				if type_checker == "per curiam" || (!paragraph_text.scan(JUSTICE_NAME_REGEX).empty? && !paragraph_text.scan(NAME_REGEX)[0].empty?)
+
+					#Save current Opinion
+					opinions_attributes << current_opinion_object
+
+					#Start next Opinion
+					begin
+						paragraphs_attributes = []
+						opinion_type_id = OpinionType.find_by_opinion_type(paragraph_text.scan(OPINION_TYPE_DETECTION_REGEX)[0]).id
+						if !paragraph_text.scan(JUSTICE_NAME_REGEX).empty? && !paragraph_text.scan(NAME_REGEX)[0].empty?
+							justice_id = Justice.find_by_searchable_name(paragraph_text.scan(JUSTICE_NAME_REGEX)[0][8..-1]).id 
+						end
+					rescue 
+						p "ERROR"
+						p case_dir
+						p paragraph_text.scan(NAME_REGEX)
+						p Justice.find_by_searchable_name(paragraph_text.scan(NAME_REGEX)[0])
+						debugger
+					end
+
+
+					current_opinion_object = { opinion_type_id: opinion_type_id, justice_id: justice_id, paragraphs_attributes: paragraphs_attributes }
 				end
-
-
-
-				current_opinion_object = { opinion_type_id: opinion_type_id, justice_id: justice_id, paragraphs_attributes: paragraphs_attributes }
-				paragraphs_attributes = []
 			end
 
 			current_paragraph_object = {paragraph_index_number: idx,
@@ -97,13 +106,15 @@ cases.each_with_index do |case_dir, jidx|
 			if idx == paragraph_text_array.length - 1
 				opinions_attributes << current_opinion_object
 			end
+		rescue 
+			debugger
+			p "hello"
 		end
-
-		case_object = ScotusCase.create!({volume: volume, start_page: start_page, date_heard: date_heard,
-														case_name: case_name, opinions_attributes: opinions_attributes})
-	rescue
-		debugger
 	end
+
+	case_object = ScotusCase.create!({volume: volume, start_page: start_page, date_heard: date_heard,
+													case_name: case_name, opinions_attributes: opinions_attributes})
+
 end
 
 

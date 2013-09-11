@@ -24,8 +24,11 @@ gem 'nokogiri'
 
 gem 'jquery-rails'
 
+gem 'haml'
+
 gem 'debugger'
 
+gem "twitter-bootstrap-rails"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

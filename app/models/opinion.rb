@@ -7,6 +7,8 @@ class Opinion < ActiveRecord::Base
 
   belongs_to :case, :class_name => "ScotusCase", :foreign_key => :case_id 
 
+  belongs_to :opinion_type
+
 
   accepts_nested_attributes_for :paragraphs
 
