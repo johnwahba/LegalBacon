@@ -1,0 +1,5 @@
+%h1= @justice.name
+- @opinions.each do |opinion_name, opinion_list|
+	%h3= opinion_name
+	- opinion_list.each do |scotus_case|
+		%p!= linkify_case_name(scotus_case) 

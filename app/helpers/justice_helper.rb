@@ -1,0 +1,2 @@
+module JusticeHelper
+end

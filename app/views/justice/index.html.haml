@@ -1,0 +1,9 @@
+%table
+	%tr
+		%td
+			%h3 Justice Name
+		%td
+			%h3 Number
+	- @justices.each do |justice_row|
+		%tr
+			%td!= linkify_justice_name(justice_row)
