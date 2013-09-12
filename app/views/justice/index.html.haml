@@ -1,9 +1,15 @@
+%div.jumbotron.subhead
+	%h3 Justices
 %table
 	%tr
-		%td
-			%h3 Justice Name
-		%td
-			%h3 Number
-	- @justices.each do |justice_row|
+		%th Justice
+		%th Start
+		%th End
+
+	- @justices.each do |justice|
 		%tr
-			%td!= linkify_justice_name(justice_row)
+			%td
+				%a{href: justice_url(justice.id) }=justice.name
+			%td= justice.start_date.year
+			%td= justice.end_date.to_s[0..3] 
+			-#<-strange bug preventing #year method

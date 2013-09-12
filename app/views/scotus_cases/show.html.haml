@@ -1,8 +1,8 @@
 %div.container	
 	%div.hero-unit
 		%h1{ style: "text-align:center;"}!=@case.case_name.split(/v\./).map(&:titleize).join("<br>v.<br>")
-	-@case.paragraphs.each do |paragraph|
+	-@case.paragraphs.all.each do |paragraph|
 		-if paragraph.start_of_opinion
-			%h3{ id: paragraph.justice, style: "text-align:center;"}=paragraph.text
+			%h3{ id: "opinion#{paragraph.opinion_id}" , style: "text-align:center;"}=paragraph.text
 		-else
-			%p{ id: paragraph.paragraph_index_number}="		" + paragraph.text
+			%p{ id: paragraph.paragraph_index_number}= paragraph.text

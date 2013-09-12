@@ -1,5 +1,7 @@
 %h1= @justice.name
 - @opinions.each do |opinion_name, opinion_list|
-	%h3= opinion_name
+	%h3= opinion_name unless opinion_list.empty?
 	- opinion_list.each do |scotus_case|
-		%p!= linkify_case_name(scotus_case) 
+		%a{href: "#{case_url(scotus_case.volume, scotus_case.start_page)}#opinion#{scotus_case.opinion_id}" }=scotus_case.case_name
+		%br
+		%br

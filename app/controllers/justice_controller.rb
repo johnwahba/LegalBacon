@@ -3,7 +3,7 @@ class JusticeController < ApplicationController
   	@justice = Justice.find(params[:justice_id])
   	majoritys, concurs, dissents, per_curiams, memos = [],[],[],[],[]
   	query = <<-SQL
-  		SELECT scotus_cases.*, opinion_types.opinion_type
+  		SELECT scotus_cases.*, opinion_types.opinion_type, opinions.id AS opinion_id
 		FROM justices 
 		JOIN opinions 
 			ON opinions.justice_id = justices.id
@@ -38,7 +38,7 @@ class JusticeController < ApplicationController
   end
 
   def index
-  	@justices = Justice.all.map(&:name)
+  	@justices = Justice.all
   end
 
 end
