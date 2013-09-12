@@ -8,6 +8,10 @@ class Paragraph < ActiveRecord::Base
   through: :opinion, 
   source: :case
 
+  has_one :justice,
+  through: :opinion,
+  source: :justice
+
   belongs_to :opinion
 
   accepts_nested_attributes_for :citations

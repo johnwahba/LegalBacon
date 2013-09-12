@@ -6,4 +6,6 @@ LegalDatabase::Application.routes.draw do
   get "justice/:justice_id", to: 'justice#show', as: "justice"
   get "justices(/:sorter)", to: "justice#index", as: "justices"
 
+  root to: 'volume#index'
+
 end
