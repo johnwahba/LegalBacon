@@ -5,4 +5,4 @@
 		-if paragraph.start_of_opinion
 			%h3{ id: "opinion#{paragraph.opinion_id}" , style: "text-align:center;"}=paragraph.text
 		-else
-			%p{ id: paragraph.paragraph_index_number}= paragraph.text
+			%p{ id: paragraph.paragraph_index_number}!= linkify(paragraph.text)
