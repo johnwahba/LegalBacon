@@ -6,8 +6,8 @@
 					-@case.paragraphs.all.each do |paragraph|
 						-if paragraph.start_of_opinion
 							%li
-							%a{ href: "#opinion#{paragraph.opinion_id}" , style: "text-align:center;"}
-								%h3=normalize_opinion_header(paragraph.text)
+								%a{ href: "#opinion#{paragraph.opinion_id}" , style: "text-align:center;"}
+									%h3=normalize_opinion_header(paragraph.text)
 							
 
 		%div.span9
