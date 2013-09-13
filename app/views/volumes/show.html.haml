@@ -1,1 +1,11 @@
-%p=@cases.all.map(&:opinions).map(&:length)
+%table
+	%tr
+		%th Volume
+		%th Start
+		%th Case Name
+	-@cases.each do |scotus_case|
+		%tr
+			%th=scotus_case.volume
+			%th=scotus_case.start_page
+			%th
+				%a{href: "#{case_url(scotus_case.volume, scotus_case.start_page)}" }=scotus_case.case_name[0..140]

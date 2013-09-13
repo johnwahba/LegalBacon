@@ -34,3 +34,11 @@
     }
 }
 
+.center{
+    width:900px;
+    margin: 0 auto;
+}
+
+.fill{
+    width:100%;
+}
