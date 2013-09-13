@@ -1,16 +1,6 @@
-%div.container-fluid
-	%div.page-header
-		%div.hero-unit
-			%div.row
-				%div.div-buttons
-					%h1 Legal Bacon
-					%p.lead Where the Law Becomes digestible
+%div.container-fluid.pad
 	%div.row-fluid
-		%a{ href: justices_url }
-			%div.span6.pad-around
-				%div.btn-primary.div-buttons{ value: "Browse by Justice" }
-					%h2.pad-around Browse by Justice
-		%a{ href: volumes_url }
-			%div.span6.pad-around
-				%div.btn-primary.div-buttons{ value: "Browse by Volume" }
-					%h2.pad-around Browse by Volume
+		-(244..479).to_a.each do |volume_number|
+			%a{href: volume_url(volume_number)}
+				%div.btn.span3.btn-primary
+					%h2=volume_number

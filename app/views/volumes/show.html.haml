@@ -1,4 +1,4 @@
-%h2.center="Volume #{@cases.first.volume}"
+%h2.center="Volume #{@cases.first.volume}" if @cases.first
 %div.center
 	%table.fill.table-striped.table.table-bordered
 		%tr
@@ -8,6 +8,6 @@
 		-@cases.each do |scotus_case|
 			%tr
 				%th=scotus_case.volume
-			%th=scotus_case.start_page
+				%th=scotus_case.start_page
 				%th
 					%a{href: "#{case_url(scotus_case.volume, scotus_case.start_page)}" }=scotus_case.case_name.split(/v\./).map(&:titleize).join(" v. ")[0..140]
