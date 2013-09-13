@@ -1,0 +1,7 @@
+%div.navbar
+	%div.navbar-inner
+		%a.brand{href: "/"}="Legal Bacon"
+		%ul
+			-if @volume_number
+				%li.active
+					%a{href: volume_url(@volume_number)}="Volume"

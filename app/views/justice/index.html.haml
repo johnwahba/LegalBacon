@@ -1,17 +1,18 @@
-%div.jumbotron.subhead.center
-	%h3.center Justices
-%table.fill.table-striped.table.table-bordered
-	%tr
-		%th Number
-		%th Justice
-		%th Start
-		%th End
-
-	- @justices[6..-1].each do |justice|
+%div.center
+	%div.jumbotron.subhead.center
+		%h3.center Justices
+	%table.fill.table-striped.table.table-bordered
 		%tr
-			%td=justice.id
-			%td
-				%a{href: justice_url(justice.id) }=justice.name
-			%td= justice.start_date.year
-			%td= justice.end_date.to_s[0..3] 
-			-#<-strange bug preventing #year method
+			%th Number
+			%th Justice
+			%th Start
+			%th End
+
+		- @justices[6..-1].each do |justice|
+			%tr
+				%td=justice.id
+				%td
+					%a{href: justice_url(justice.id) }=justice.name
+				%td= justice.start_date.year
+				%td= justice.end_date.to_s[0..3] 
+				-#<-strange bug preventing #year method

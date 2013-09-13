@@ -15,7 +15,7 @@
 
 .sidebar-nav-fixed {
     position:fixed;
-    top:0px;
+    top:60px;
     left:0px;
     width:20%;
 }
@@ -29,16 +29,31 @@
 
 @media (max-width: 979px) {
     .sidebar-nav-fixed {
-        top:0px;
+        top:40px;
         left:0px;
     }
 }
 
 .center{
-    width:900px;
+    max-width:900px;
     margin: 0 auto;
 }
 
 .fill{
-    width:100%;
+    max-width:100%;
+}
+
+.pad{
+    padding-top:50px;
+}
+.pad-around{
+    padding-top:10px;
+    padding-left:10px;
+    padding-right: 10px;
+}
+
+
+.div-buttons{
+    text-align: center;
+    border-radius: 15px;
 }

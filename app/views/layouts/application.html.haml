@@ -9,6 +9,18 @@
     = javascript_include_tag :application
     = csrf_meta_tags
     = yield(:head)
-  %body{"data-spy" => "scroll", "data-target" => "#sidebar"}
+  %body.pad{"data-spy" => "scroll", "data-target" => "#sidebar"}
+ 
+    %div.pad-around.navbar.navbar-fixed-top
+      %div.navbar-inner
+        %a.brand{href: "/"}="Legal Bacon"
+        %ul.in-line.unstyled
+          -if @navbar_links
+            -@navbar_links.each do |nav_item|
+              %li
+                %a{href: nav_item[:url]}
+                  %h4=nav_item[:text]
+
+
     %div=yield
   %footer
