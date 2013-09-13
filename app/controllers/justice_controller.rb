@@ -39,6 +39,12 @@ class JusticeController < ApplicationController
 
   def index
   	@justices = Justice.all
+
+    if params[:format]== "json"
+      render json: @justices.map(&:name)[6..-1]
+    else
+      render :index
+    end
   end
 
 end

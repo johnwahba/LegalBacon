@@ -9,7 +9,7 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
-//
+//= require typeahead
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
@@ -23,3 +23,8 @@ $(window).on('load', function () {
       $spy.scrollspy($spy.data())
     })
   })
+
+$('input.justiceSearch').typeahead({
+  name: 'justices',
+  prefetch: 'https://legalbacon.com/justices.json',
+});
