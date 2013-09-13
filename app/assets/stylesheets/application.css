@@ -11,3 +11,26 @@
  *= require_self
  *= require_tree .
  */
+
+
+.sidebar-nav-fixed {
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:20%;
+}
+
+@media (max-width: 767px) {
+    .sidebar-nav-fixed {
+        position:static;
+        width:auto;
+    }
+}
+
+@media (max-width: 979px) {
+    .sidebar-nav-fixed {
+        top:0px;
+        left:0px;
+    }
+}
+

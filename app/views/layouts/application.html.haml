@@ -8,11 +8,5 @@
     = javascript_include_tag :application
     = csrf_meta_tags
     = yield(:head)
-  %body
-    #container.container
-      %header
-        = render 'layouts/navigation'
-        = render 'layouts/messages'
-      #main{:role => "main"}
-        = yield
-      %footer
+  %body{"data-spy" => "scroll", "data-target" => "#sidebar"}=yield
+  %footer
