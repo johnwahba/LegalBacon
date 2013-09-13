@@ -38,7 +38,7 @@ module ApplicationHelper
 			opinion_type = ["'s dissent"]
 		end
 		unless justice_name.empty? || opinion_type.empty?
-			return "Justice #{justice_name[0].titleize}#{opinion_type[0]}"
+			return "Justice #{justice_name[0].titleize.delete(' ')}#{opinion_type[0]}"
 		else
 			return paragraph_text
 		end

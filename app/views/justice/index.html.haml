@@ -1,13 +1,15 @@
 %div.jumbotron.subhead.center
 	%h3.center Justices
-%table.fill
+%table.fill.table-striped.table.table-bordered
 	%tr
+		%th Number
 		%th Justice
 		%th Start
 		%th End
 
-	- @justices.each do |justice|
+	- @justices[6..-1].each do |justice|
 		%tr
+			%td=justice.id
 			%td
 				%a{href: justice_url(justice.id) }=justice.name
 			%td= justice.start_date.year
