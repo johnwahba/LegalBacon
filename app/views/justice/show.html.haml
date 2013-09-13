@@ -1,7 +1,30 @@
 %h1= @justice.name
-- @opinions.each do |opinion_name, opinion_list|
-	%h3= opinion_name unless opinion_list.empty?
-	- opinion_list.each do |scotus_case|
-		%a{href: "#{case_url(scotus_case.volume, scotus_case.start_page)}#opinion#{scotus_case.opinion_id}" }=scotus_case.case_name
-		%br
-		%br
+%div.tabbable
+	-first = true
+	%ul.nav.nav-tabs
+		- @opinions.each do |opinion_name, opinion_list|
+			-unless opinion_list.empty?
+				-if first
+					%li.active
+						%a{href: "##{opinion_name[0]}", "data-toggle" => "tab"}=opinion_name
+					-first=false
+				-else
+					%li
+						%a{href: "##{opinion_name[0]}", "data-toggle" => "tab"}=opinion_name
+	%div.tab-content
+		-first = true
+		- @opinions.each do |opinion_name, opinion_list|
+			-unless opinion_list.empty?
+				-if first
+					%div.tab-pane.active{:id => opinion_name[0]}
+						- opinion_list.each do |scotus_case|
+							%a{href: "#{case_url(scotus_case.volume, scotus_case.start_page)}#opinion#{scotus_case.opinion_id}" }=scotus_case.case_name.split(/v\./).map(&:titleize).join(" v. ")
+							%br
+							%br
+				-else
+					%div.tab-pane{:id => opinion_name[0]}
+
+						- opinion_list.each do |scotus_case|
+							%a{href: "#{case_url(scotus_case.volume, scotus_case.start_page)}#opinion#{scotus_case.opinion_id}" }=scotus_case.case_name
+							%br
+							%br

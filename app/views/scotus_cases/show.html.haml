@@ -6,13 +6,12 @@
 					-@case.paragraphs.all.each do |paragraph|
 						-if paragraph.start_of_opinion
 							%li
-
 								%a{ href: "#opinion#{paragraph.opinion_id}" , style: "text-align:center;"}
 									%h3=normalize_opinion_header(paragraph.text)
 							
 
 		%div.span9
-			%h3{ style: "text-align:center;"}!=@case.case_name.split(/v\./).map(&:titleize).join("<br>v.<br>")
+			%h4{ style: "text-align:center;"}!=@case.case_name.split(/v\./).map(&:titleize).join("<br>v.<br>")
 			-@case.paragraphs.all.each do |paragraph|
 				-if paragraph.start_of_opinion
 					%h3{ id: "opinion#{paragraph.opinion_id}" , style: "text-align:center;"}=paragraph.text
