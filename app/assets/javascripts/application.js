@@ -23,8 +23,3 @@ $(window).on('load', function () {
       $spy.scrollspy($spy.data())
     })
   })
-
-$('input.justiceSearch').typeahead({
-  name: 'justices',
-  prefetch: 'https://legalbacon.com/justices.json',
-});
