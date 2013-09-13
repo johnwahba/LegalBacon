@@ -30,8 +30,13 @@ module ApplicationHelper
 		justice_name =paragraph_text.scan(JUSTICE_NAME_REGEX_2).flatten[0]
 		if justice_name
 			justice_name = justice_name.delete(' ')
-			justice_id = Justice.find_by_searchable_name(justice_name.downcase).id
-			paragraph_text.gsub(justice_name, "<a href='#{justice_url(justice_id)}'>#{justice_name}</a>")
+			justice = Justice.find_by_searchable_name(justice_name.downcase)
+			if justice
+				justice_id = justice.id
+				paragraph_text.gsub(justice_name, "<a href='#{justice_url(justice_id)}'>#{justice_name}</a>")
+			else
+				paragraph_text
+			end
 		else
 			paragraph_text
 		end
