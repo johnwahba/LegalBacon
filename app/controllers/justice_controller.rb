@@ -31,7 +31,7 @@ class JusticeController < ApplicationController
   	end
 
   	@opinions = {"Majority Opinions" => majoritys,
-  				 "Concurrances" => concurs,
+  				 "Concurrences" => concurs,
   				 "Dissents" => dissents,
   				 "Memos" => memos}
 
